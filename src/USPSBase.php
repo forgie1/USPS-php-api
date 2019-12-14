@@ -212,8 +212,13 @@ abstract class USPSBase
             $errorInfo = $this->getValueByKey($arrayResponse, 'Error');
 
             if ($errorInfo) {
-                $this->setErrorCode($errorInfo['Number']);
-                $this->setErrorMessage($errorInfo['Description']);
+                if (isset($errorInfo['Number'])) {
+                    $this->setErrorCode($errorInfo['Number']);
+                    $this->setErrorMessage($errorInfo['Description']);
+                } else {
+                    $this->setErrorCode($errorInfo['Error']['Number']);
+                    $this->setErrorMessage($errorInfo['Error']['Description']);
+                }
             }
         }
 
